@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orienta IA - Desafio TCC em Ação</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00357A; 
+            --primary-hover: #002250; 
+            --secondary: #00357A; 
+            --bg-light: #EDECE8; 
+            --bg-white: #FFFFFF;
+            --text-dark: #00357A; 
+            --text-light: #3D6496; 
+            --border: #B3BFCD; 
+            --cta: #FF6B00; 
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Botão de Alta Conversão */
+        .btn {
+            display: inline-block;
+            background-color: var(--cta);
+            color: var(--bg-white);
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-radius: 8px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #e66000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.5);
+        }
+
+        /* Classe para ocultar os elementos até o tempo certo do VSL */
+        .btn-delay {
+            display: none; /* Fica oculto até o script JS ativar */
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* 1. Hero Section */
+        .hero {
+            background-color: var(--primary);
+            color: var(--bg-white);
+            padding: 80px 0 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-logo-img {
+            max-height: 80px;
+            margin-bottom: 40px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--bg-light);
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* 2. VSL Section */
+        .vsl {
+            background-color: var(--bg-white);
+        }
+
+        .vsl h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .vsl p {
+            max-width: 700px;
+            margin: 0 auto 40px auto;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .video-placeholder {
+            background-color: #002250; 
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16/9;
+            margin: 0 auto;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            background: var(--cta);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .play-btn::after {
+            content: '';
+            display: block;
+            border-style: solid;
+            border-width: 15px 0 15px 25px;
+            border-color: transparent transparent transparent white;
+            margin-left: 5px;
+        }
+
+        /* 3. Dor (Cards) */
+        .dor {
+            background-color: var(--bg-light);
+        }
+        
+        .dor h2 {
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-white);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        
+        .card-text {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* 4. Solução */
+        .solucao {
+            background-color: var(--primary); 
+            color: white;
+            text-align: center;
+        }
+        
+        .solucao h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--bg-light);
+        }
+        
+        .solucao p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #CBD5E1;
+        }
+
+        /* 5. Como Funciona (Timeline) */
+        .timeline-section {
+            background: var(--bg-white);
+        }
+        .timeline-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        .timeline {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .timeline-item {
+            padding: 20px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 20px;
+            position: relative;
+            background: var(--bg-light);
+            border-radius: 0 8px 8px 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 25px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+        .timeline-item h3 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        .timeline-result {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-top: 30px;
+        }
+
+        /* 6. Entregáveis */
+        .deliverables {
+            background-color: var(--bg-light);
+        }
+        .deliverables h2 {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        .deliverables .card {
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+        .deliverables .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* 7. Autoridade */
+        .autoridade {
+            background-color: var(--bg-white);
+        }
+        .autoridade-flex {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        .autoridade-img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .autoridade-content h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        .autoridade-content p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        .autoridade-content strong {
+            color: var(--text-dark);
+        }
+
+        /* 8. Depoimentos */
+        .depoimentos {
+            background-color: var(--primary); 
+            color: white;
+        }
+        .depoimentos h2 {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        .depo-card {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        /* 9 e 10. Oferta / Resumo do Desafio (Sem Preço) */
+        .oferta {
+            background-color: var(--bg-white);
+            text-align: center;
+        }
+        .oferta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        .oferta-box {
+            background: var(--bg-white);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 50px;
+            max-width: 700px;
+            margin: 40px auto;
+            box-shadow: 0 10px 40px rgba(0, 53, 122, 0.1);
+        }
+        .oferta-list {
+            text-align: left;
+            margin-bottom: 30px;
+            list-style: none;
+        }
+        .oferta-list li {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dark);
+        }
+
+        /* 11. FAQ */
+        .faq {
+            background-color: var(--bg-light);
+        }
+        .faq h2 {
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+        }
+        .faq-item {
+            background: var(--bg-white);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+        .faq-item h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .faq-item p {
+            color: var(--text-light);
+        }
+
+        /* 12. Footer */
+        footer {
+            background: var(--primary); 
+            color: #B3BFCD;
+            padding: 50px 0;
+            text-align: center;
+        }
+        
+        .footer-logo-img {
+            max-height: 40px;
+            margin-bottom: 20px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+        .footer-links {
+            margin-top: 20px;
+        }
+        .footer-links a {
+            color: var(--bg-light);
+            margin: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.2rem; }
+            .autoridade-flex { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Hero Section -->
+    <section class="hero text-center">
+        <div class="container">
+            <img src="assets\images\Cabeçalho.png" class="hero-logo-img">
+            
+            <h1>Destrave seu TCC e saia com a base do seu projeto pronta em poucos dias.</h1>
+            <p>Tema definido, problema de pesquisa estruturado, objetivo elaborado e metodologia escolhida com apoio de uma IA treinada para orientar cada etapa.</p>
+            
+            <!-- Botão oculto no início para garantir que o lead assista ao vídeo -->
+            <a href="oferta.html" class="btn btn-delay">Quero destravar meu TCC</a>
+        </div>
+    </section>
+
+    <!-- 2. VSL -->
+    <section class="vsl section-padding text-center">
+        <div class="container">
+            <h2>Assista antes de continuar</h2>
+            <p>Em poucos minutos você vai entender por que tantos alunos travam no TCC e como o método Orienta IA ajuda a transformar a confusão mental em um projeto estruturado.</p>
+            <div class="video-placeholder">
+                <div class="play-btn"></div>
+            </div>
+            
+            <!-- Botão de CTA que aparece abaixo do vídeo após o delay -->
+            <div style="margin-top: 40px;">
+                <a href="oferta.html" class="btn btn-delay">Sim, Quero Ver a Oferta Completa</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- O Restante do conteúdo permanece para ancorar autoridade -->
+    <!-- 3. Problema -->
+    <section class="dor section-padding">
+        <div class="container">
+            <h2 class="text-center">Você se identifica com alguma dessas situações?</h2>
+            <div class="grid">
+                <div class="card">
+                    <span class="card-icon">❌</span>
+                    <div>
+                        <div class="card-title">Não sabe escolher o tema</div>
+                        <div class="card-text">Fica horas olhando para a tela em branco sem saber por onde começar.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <span class="card-icon">❌</span>
+                    <div>
+                        <div class="card-title">Tem a ideia, mas falta a técnica</div>
+                        <div class="card-text">Sabe o que quer falar, mas não consegue transformar isso em uma pesquisa acadêmica válida.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <span class="card-icon">❌</span>
+                    <div>
+                        <div class="card-title">Confusão de conceitos</div>
+                        <div class="card-text">Não entende a diferença clara entre tema, problema de pesquisa e objetivo.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <span class="card-icon">❌</span>
+                    <div>
+                        <div class="card-title">Procrastinação crônica</div>
+                        <div class="card-text">Está adiando o TCC há meses por pura ansiedade e falta de clareza.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <span class="card-icon">❌</span>
+                    <div>
+                        <div class="card-title">Medo de refação</div>
+                        <div class="card-text">Tem pavor de escrever páginas e mais páginas e o orientador mandar apagar tudo.</div>
+                    </div>
+                </div>
+                <div class="card">
+                    <span class="card-icon">❌</span>
+                    <div>
+                        <div class="card-title">Travado na metodologia</div>
+                        <div class="card-text">Fica completamente perdido quando o assunto é escolher a metodologia correta.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Solução -->
+    <section class="solucao section-padding">
+        <div class="container">
+            <h2>O Orienta IA foi criado exatamente para resolver isso.</h2>
+            <p>Esqueça o sofrimento solitário. O Orienta IA combina um método pedagógico validado passo a passo com uma Inteligência Artificial treinada especificamente para orientar a construção do seu TCC. Aqui, você não recebe respostas genéricas. Você recebe orientação estruturada e personalizada para avançar etapa por etapa.</p>
+        </div>
+    </section>
+
+    <!-- 5. Como Funciona -->
+    <section class="timeline-section section-padding">
+        <div class="container">
+            <h2 class="text-center">Como Funciona na Prática</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Etapa 1: Escolha do Tema</h3>
+                    <p>Encontramos um tema relevante, viável e que você goste.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Etapa 2: Delimitação</h3>
+                    <p>Focamos o tema para ele não ficar amplo demais.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Etapa 3: Problema de Pesquisa</h3>
+                    <p>Criamos a pergunta central que guiará todo o seu TCC.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Etapa 4: Objetivos</h3>
+                    <p>Definimos o Objetivo Geral e os Específicos com verbos acadêmicos corretos.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Etapa 5: Metodologia</h3>
+                    <p>Escolhemos a metodologia exata para responder ao seu problema.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Etapa 6: Estrutura da Introdução</h3>
+                    <p>Montamos o esqueleto perfeito para iniciar o seu texto.</p>
+                </div>
+                <div class="timeline-result">
+                    🎯 RESULTADO FINAL: Projeto iniciado, organizado, validado e pronto para ser desenvolvido.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Entregáveis -->
+    <section class="deliverables section-padding">
+        <div class="container">
+            <h2 class="text-center">O que você recebe</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <div class="card-title">IA Especialista em TCC</div>
+                    <div class="card-text">Orientação guiada, crítica e acadêmica para cada etapa do seu projeto.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎥</div>
+                    <div class="card-title">Curso Destrava TCC</div>
+                    <div class="card-text">Vídeos curtos e objetivos que explicam o que a faculdade complicou.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📄</div>
+                    <div class="card-title">Modelos Prontos</div>
+                    <div class="card-text">Tenha acesso a exemplos reais e estruturas validadas.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✏️</div>
+                    <div class="card-title">Exercícios Práticos</div>
+                    <div class="card-text">Aplicação imediata para você colocar em prática o que definiu.</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✅</div>
+                    <div class="card-title">Checklist de Aprovação</div>
+                    <div class="card-text">Para garantir que nada importante fique faltando antes de apresentar.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Autoridade -->
+    <section class="autoridade section-padding">
+        <div class="container autoridade-flex">
+            <div style="background: var(--bg-light); width: 100%; max-width: 400px; aspect-ratio: 4/5; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-light); border: 1px solid var(--border);">
+                [ FOTO PROFISSIONAL ]
+            </div>
+            <div class="autoridade-content">
+                <h2>Quem está por trás do Orienta IA?</h2>
+                <p><strong>Professora universitária há mais de 20 anos</strong>, coordenadora de curso e orientadora de centenas de Trabalhos de Conclusão de Curso.</p>
+                <p>Após acompanhar as principais dificuldades dos alunos, a frustração e o medo das bancas de avaliação, decidi agir.</p>
+                <p>Traduzi décadas de experiência acadêmica para desenvolver um método inovador, apoiado por Inteligência Artificial, para tornar o processo de pesquisa e escrita do TCC mais simples, rápido e seguro.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Depoimentos -->
+    <section class="depoimentos section-padding text-center">
+        <div class="container">
+            <h2>O que dizem os alunos orientados pelo método:</h2>
+            <div class="grid">
+                <div class="depo-card">
+                    <p>"Prof, finalmente entendi o que é metodologia graças a vocês! Aprovada com sucesso."</p>
+                    <small>— Mensagem de Aluno</small>
+                </div>
+                <div class="depo-card">
+                    <p>"O Orienta IA me poupou meses de estresse. Fiz em uma semana o que estava adiando há 6 meses."</p>
+                    <small>— Avaliação de Aluno</small>
+                </div>
+                <div class="depo-card">
+                    <p>"Meu orientador elogiou muito a estrutura do meu problema de pesquisa. Deu tudo certo!"</p>
+                    <small>— Print do WhatsApp</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9 e 10. Oferta / CTA Final (Sem preço) -->
+    <section id="oferta" class="oferta section-padding">
+        <div class="container">
+            <h2>Pronto para destravar seu TCC?</h2>
+            <p style="font-size: 1.2rem; color: var(--text-light);">Ao final do desafio, você terá a base do seu projeto pronta em 8 dias.</p>
+            
+            <div class="oferta-box">
+                <ul class="oferta-list">
+                    <li>✅ <strong>Tema central</strong> perfeitamente definido e delimitado</li>
+                    <li>✅ <strong>Problema de pesquisa</strong> escrito com clareza</li>
+                    <li>✅ <strong>Objetivos</strong> elaborados nos padrões ABNT</li>
+                    <li>✅ <strong>Metodologia</strong> escolhida e justificada</li>
+                    <li>✅ <strong>Estrutura inicial</strong> pronta para escrever</li>
+                </ul>
+                
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 30px 0;">
+                
+                <a href="oferta.html" class="btn btn-delay" style="width: 100%;">Acessar a Oferta e Garantir Minha Vaga</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 11. FAQ -->
+    <section class="faq section-padding">
+        <div class="container">
+            <h2 class="text-center">Perguntas Frequentes</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item">
+                    <h4>Serve para qualquer curso?</h4>
+                    <p>Sim. A base da metodologia científica é universal. Seja em Direito, Enfermagem, Engenharia ou Administração, o Orienta IA adapta o contexto.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>Preciso já ter um tema em mente?</h4>
+                    <p>Não! A Etapa 1 do nosso método foi desenvolvida exatamente para ajudar você a explorar suas afinidades e encontrar um tema viável do zero.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>A IA faz o TCC inteiro para mim?</h4>
+                    <p>Não. O Orienta IA não é uma ferramenta de trapaça (antiética e que gera reprovação). Ele atua como um orientador virtual, fazendo perguntas certas para que você desenvolva seu projeto com qualidade e mérito próprio.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. Footer -->
+    <footer>
+        <div class="container">
+            <img src="assets\images\Cabeçalho.png" alt="Logo Orienta IA" class="footer-logo-img">
+            
+            <p>📱 WhatsApp: (XX) XXXX-XXXX | 📸 Instagram: @orientaia.tcc</p>
+            <p>✉️ E-mail: orientaia.tcc@gmail.com</p>
+            
+            <div class="footer-links">
+  
+            </div>
+            <p style="margin-top: 30px; font-size: 0.8rem; color: var(--border);">© 2026 Orienta IA. Todos os direitos reservados. CNPJ: XX.XXX.XXX/0001-XX</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT DE DELAY PARA OS BOTÕES (Efeito VSL) -->
+    <script>
+        // TEMPO DE DELAY: Configure aqui o tempo em SEGUNDOS para os botões aparecerem.
+        // Exemplo: Se o pitch de vendas do seu vídeo começa aos 5 minutos, coloque 300 (5 * 60).
+        // Atualmente está configurado para 5 segundos apenas para você testar e ver funcionando.
+        const tempoEmSegundos = 5; 
+
+        setTimeout(function() {
+            const botoes = document.querySelectorAll('.btn-delay');
+            botoes.forEach(function(botao) {
+                // Remove a classe de delay ou muda o display para mostrar o botão
+                botao.style.display = 'inline-block';
+            });
+        }, tempoEmSegundos * 1000);
+    </script>
+
+</body>
+</html>
